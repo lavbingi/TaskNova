@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - TaskNova</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #7e57c2, #9575cd, #b39ddb); /* Rich purple gradient */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: rgb(0, 0, 0);
+    }
+
+    .signup-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 350px;
+      text-align: center;
+    }
+
+    .signup-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .signup-container input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+
+    .signup-container input:focus {
+      outline: none;
+      border: 2px solid  #8e75be;
+      background-color: #fff;
+    }
+
+    .signup-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #8e75be;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .signup-container button:hover {
+      background-color:  #8e75be;
+    }
+
+    .signup-container p {
+      font-size: 14px;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .signup-container p a {
+      color:  #8e75be;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-container p a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container">
+    <h2>Sign Up for TaskNova</h2>
+
+    <!-- Sign Up Form -->
+    <form id="signup-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" placeholder="Enter your username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script>
+    // Handle sign up form submission
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Get form values
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Store credentials in localStorage
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+
+      alert('Sign up successful! You can now log in.');
+
+      // Redirect to login page
+      window.location.href = 'login.html';
+    });
+  </script>
+
+</body>
+</html>

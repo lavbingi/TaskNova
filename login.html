@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskNova</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #7e57c2, #9575cd, #b39ddb); /* Rich purple gradient */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: rgb(0, 0, 0);
+      position: relative;
+    }
+
+    /* Main content container */
+    .main-content {
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 350px;
+      text-align: center;
+    }
+
+    .modal-content h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #f9f9f9;
+    }
+
+    .modal-content input:focus {
+      outline: none;
+      border: 2px solid #000000;
+      background-color: #fff;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 12px;
+      background-color: #8e75be;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content button:hover {
+      background-color: #9575cd;
+    }
+
+    .modal-content p {
+      font-size: 14px;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .modal-content p a {
+      color: #8e75be;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .modal-content p a:hover {
+      text-decoration: underline;
+    }
+
+    .modal-content .social-button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content .google-btn {
+      background-color: #DB4437;
+    }
+
+    .modal-content .facebook-btn {
+      background-color: #4267B2;
+    }
+
+    /* Main page style */
+    h1 {
+      font-size: 48px;
+      color: #fff;
+    }
+
+    p {
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .task-container {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .task-container button {
+      padding: 15px 30px;
+      background-color: #8e75be;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .task-container button:hover {
+      background-color: #9575cd;
+    }
+
+    /* Navigation Bar */
+    nav {
+      width: 100%;
+      background: linear-gradient(135deg, #7e57c2, #9575cd); /* Gradient background */
+      padding: 10px 30px; /* Adjust padding for spacing */
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center; /* Center all nav items */
+      align-items: center; /* Vertically align items */
+      box-sizing: border-box; /* Ensure padding is included in the width and height calculations */
+    }
+
+    /* Navigation links container (About, Service, Contact) */
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1; /* Ensures links take up remaining space */
+    }
+
+    /* Individual items in the navigation */
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center; /* Center the items horizontally */
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Individual link items */
+    nav ul li {
+      margin: 0 20px; /* Spacing between menu items */
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      font-weight: 500; /* Slightly bolder text */
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #f2f2f2; /* Lighter color on hover */
+    }
+
+    /* Login button - Centered in the navigation */
+    .login-btn {
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #333; /* Darker black on hover */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <h1>Welcome to TaskNova</h1>
+    <p>Your task management solution.</p>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button class="login-btn" onclick="openLoginModal()">Login</button></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal" onclick="closeLoginModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <h2>Login to TaskNova</h2>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Enter your username" required>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button type="submit">Login</button>
+        <p><a href="forgot-password.html">Forgot your password?</a></p>
+      </form>
+
+      <button class="social-button google-btn">
+        <a href="https://accounts.google.com/signin/v2/identifier" target="_blank" style="text-decoration: none; color: white;">Sign in with Google</a>
+      </button>
+
+      <button class="social-button facebook-btn">
+        <a href="https://www.facebook.com/login/" target="_blank" style="text-decoration: none; color: white;">Sign in with Facebook</a>
+      </button>
+
+      <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Function to open the login modal
+    function openLoginModal() {
+      document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    // Function to close the login modal
+    function closeLoginModal(event) {
+      // Close the modal if the user clicks outside the modal content
+      if (event.target === document.getElementById('loginModal')) {
+        document.getElementById('loginModal').style.display = 'none';
+      }
+    }
+
+    // Handle login form submission
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const storedUsername = localStorage.getItem('username');
+      const storedPassword = localStorage.getItem('password');
+
+      if (username === storedUsername && password === storedPassword) {
+        alert('Login successful!');
+        window.location.href = 'TaskNova.html'; // Redirect to Tasknova main page
+      } else {
+        alert('Incorrect username or password!');
+      }
+    });
+  </script>
+
+</body>
+</html>

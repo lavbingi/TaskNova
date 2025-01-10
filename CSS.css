@@ -1,0 +1,241 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(45deg, #b39ddb, #aa9fe4, #d1c4e9); /* Light purple gradient */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: black;
+}
+
+header p {
+  font-size: 1rem;
+  color: #050505;
+}
+
+/* Calendar and Task Panels */
+#calendar-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+#calendar, #task-panel, #timetable-panel {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Timetable Styling */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.day {
+  background: #f9f9f9;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.day h4 {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* Day Entries Styling */
+.entry {
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+form label {
+  font-weight: bold;
+  color: #555;
+}
+
+form input, form select, form button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form input:focus, form select:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+form button {
+  background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+form button:hover {
+  background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab);
+}
+
+/* Timetable Table Styling */
+#traditional-timetable {
+  margin-top: 30px;
+  width: 95%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+#traditional-timetable table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#traditional-timetable th,
+#traditional-timetable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#traditional-timetable th {
+  background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab);
+  color: white;
+  font-weight: bold;
+}
+
+#traditional-timetable td {
+  height: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .week-grid {
+      grid-template-columns: 1fr;
+  }
+
+  #calendar-container {
+      flex-direction: column;
+  }
+
+  #calendar, #task-panel, #timetable-panel {
+      width: 100%;
+  }
+}
+
+/* Task List Styling */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: #f4f4f4;
+  margin-bottom: 10px;
+  border-left: 5px solid;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+ul li span {
+  font-weight: bold;
+}
+
+ul li button {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+ul li button:hover {
+  color: #d32f2f;
+}
+
+/* Weekday Cells Hover */
+.days div {
+  position: relative;
+  text-align: center;
+  padding: 15px;
+  background: #f9f9f9;
+  color: #333;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  overflow: hidden;
+}
+
+.days div:hover {
+  background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.days div.selected {
+  background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab);
+  color: #fff;
+}
+
+.days div::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.days div[data-has-tasks="true"]::after {
+  background-color: #ff5722; /* Default color for tasks (can be overridden by JS) */
+}

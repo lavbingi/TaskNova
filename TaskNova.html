@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasknova</title>
+  <link rel="stylesheet" href="CSS.css">
+  <style>
+    /* General Styles */
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(45deg, #b39ddb, #aa9fe4, #d1c4e9); /* Light purple gradient */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        color: #333;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+        color: black;
+    }
+
+    header p {
+        font-size: 1rem;
+        color: #111010;
+    }
+
+    #calendar-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        max-width: 1200px;
+        width: 100%;
+    }
+
+    #calendar, #task-panel, #timetable-panel {
+        flex: 1;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .month-navigation {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .month-navigation button {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .month-navigation button:hover {
+        transform: scale(1.2);
+    }
+
+    .weekdays, .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .weekdays {
+        background: #e6e6fa;
+        text-align: center;
+        font-weight: bold;
+        padding: 10px 0;
+    }
+
+    .days div {
+        text-align: center;
+        padding: 15px;
+        background: #f9f9f9;
+        color: #333;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .days div:hover {
+        background: #50c3dd;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+    .days div.selected {
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+        color: #fff;
+    }
+
+    #task-panel, #timetable-panel {
+        padding: 20px;
+    }
+
+    h3 {
+        color: black;
+        margin-bottom: 10px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    form label {
+        font-weight: bold;
+        color: #555;
+    }
+
+    form input, form select, form button {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    form input:focus, form select:focus {
+        border-color: #4a90e2;
+        outline: none;
+    }
+
+    form button {
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    form button:hover {
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        #calendar-container {
+            flex-direction: column;
+        }
+
+        #calendar, #task-panel, #timetable-panel {
+            width: 100%;
+        }
+
+        .week-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Styles for timetable and tasks */
+    #traditional-timetable {
+        margin-top: 30px;
+        width: 95%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #f9f9f9;
+    }
+
+    #traditional-timetable table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    #traditional-timetable th,
+    #traditional-timetable td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #traditional-timetable th {
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+        color: white;
+        font-weight: bold;
+    }
+
+    #traditional-timetable td {
+        height: 50px;
+    }
+
+    /* Additional styles for tasks and timetable */
+    .days div[data-tasks]:hover::after {
+        content: attr(data-tasks);
+        position: absolute;
+        background: #fff;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        transform: translate(-50%, -150%);
+        z-index: 100;
+    }
+
+    .days div {
+        position: relative;
+        text-align: center;
+        padding: 15px;
+        background: #f9f9f9;
+        color: #333;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        overflow: hidden;
+    }
+
+    .days div:hover {
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+    .days div::after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 8px;
+        background-color: transparent;
+        border-radius: 50%;
+    }
+
+    .days div[data-has-tasks="true"]::after {
+        background-color: #ff5722; /* Default color for tasks (can be overridden by JS) */
+    }
+
+    /* Timetable display */
+    #weekly-timetable {
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #weekly-timetable h3 {
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+        margin-bottom: 20px;
+    }
+
+    #weekly-timetable form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    #weekly-timetable form label {
+        flex-basis: 100%;
+        font-weight: bold;
+    }
+
+    #weekly-timetable form input, 
+    #weekly-timetable form select, 
+    #weekly-timetable form button {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        flex-grow: 1;
+    }
+
+    #weekly-timetable form button {
+        background: linear-gradient(45deg, #f3d1f9, #c691d5, #a477ab); 
+        color: white;
+        cursor: pointer;
+    }
+
+    .week-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+    }
+
+    .day {
+        background: #f9f9f9;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .day h4 {
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    .day ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .day ul li {
+        padding: 5px;
+        background: #e6e6fa;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .day ul li button {
+        background: none;
+        border: none;
+        color: #ff4d4d;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .day ul li button:hover {
+        color: #d32f2f;
+    }
+  </style>
+  <script src="script.js" defer></script> 
+</head>
+<body>
+  <header>
+    <h1>Tasknova</h1>
+    <p>Manage your tasks and schedules in one place!</p>
+  </header>
+
+  <section id="calendar-container">
+    <div id="calendar">
+      <div class="month-navigation">
+        <button id="prev-month">&#8249;</button>
+        <h2 id="month-year"></h2>
+        <button id="next-month">&#8250;</button>
+      </div>
+      <div class="weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+      <div id="days" class="days"></div>
+    </div>
+
+    <div id="task-panel">
+      <h3>Add Task</h3>
+      <form id="task-form">
+        <label for="task-date">Date:</label>
+        <input type="date" id="task-date" required>
+
+        <label for="task-title">Task:</label>
+        <input type="text" id="task-title" placeholder="Enter task title" required>
+
+        <label for="task-category">Category:</label>
+        <select id="task-category">
+          <option value="Assignment">Assignment</option>
+          <option value="Exam">Exam</option>
+          <option value="Personal">Personal</option>
+          <option value="Extracurricular">Extracurricular</option>
+        </select>
+
+        <label for="task-color">Task Color:</label>
+        <input type="color" id="task-color" value="#ff0000">
+
+        <label for="task-deadline">Deadline:</label>
+        <input type="datetime-local" id="task-deadline">
+
+        <button type="submit">Add Task</button>
+      </form>
+      <h3>Tasks</h3>
+      <ul id="task-list"></ul>
+    </div>
+    <section id="timetable-panel">
+      <h3>Add Timetable</h3>
+      <form id="timetable-form">
+        <label for="timetable-day">Day:</label>
+        <select id="timetable-day" required>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+          <option value="Saturday">Saturday</option>
+          <option value="Sunday">Sunday</option>
+        </select>
+
+        <label for="entry-time">Time Slot:</label>
+        <input type="text" id="entry-time" placeholder="e.g., 9:00 AM - 10:00 AM" required>
+
+        <label for="entry-activity">Activity:</label>
+        <input type="text" id="entry-activity" placeholder="Enter activity name" required>
+
+        <label for="entry-color">Color:</label>
+        <input type="color" id="entry-color" value="#ff0000">
+
+        <button type="submit">Add Entry</button>
+      </form>
+
+    </section>
+  </section>
+
+  <!-- Subject Form for Traditional Timetable -->
+
+<!-- Traditional Timetable Table -->
+<div id="traditional-timetable">
+  <table>
+    <thead>
+      <tr>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="monday"></td>
+        <td id="tuesday"></td>
+        <td id="wednesday"></td>
+        <td id="thursday"></td>
+        <td id="friday"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
