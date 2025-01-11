@@ -1,5 +1,5 @@
 # TaskNova
-Manage your tasks and schedules in one place! it is a website which allows you to manage yous study time .
+Manage your tasks and schedules in one place! it is a website which allows you to manage yours study time .
 
 ![WhatsApp Image 2025-01-10 at 21 43 27_c36d3d6a](https://github.com/user-attachments/assets/b74a20ef-71f4-4ce3-b5a3-bfd040bcf5da)
 
